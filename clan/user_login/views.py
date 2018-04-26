@@ -61,7 +61,7 @@ class UserFormView(View):
 					#also to redirect after login
 					return redirect("/admin")
 
-	#if login is not valid just give blank fall
+	#if login is not valid just give blank form
 		return render(request, self.template_name, {'form':form})	
 
 

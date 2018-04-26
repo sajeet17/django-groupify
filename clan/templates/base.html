@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    {% load staticfiles %}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href='{% static "bootstrap/css/bootstrap.min.css" %}' type="text/css" />
+    <link rel="stylesheet" href='{% static "style.css" %}' type="text/css" />
+    <link rel="stylesheet" href='{% static "mq.css" %}' type="text/css" />
+    <!--Font-awesome CSS for icons-->
+    <link rel="stylesheet" href='{% static "font-awesome/css/font-awesome.min.css" %}' type="text/css" />
+
+    <title>{% block head_title %} KTA HO {% endblock head_title %}</title>
+  </head>
+  
+  <body>
+
+    <div class="jumbotron">
+      <h1 class="display-4">GANGS</h1>
+      <p class="lead"> Manage your Close Friends, Family and Casual People</p>
+      <hr class="my-4">
+      <p>If you don't have an account Create one now, its simple </p>
+      {% block create_account_form %}
+      {% endblock create_account_form %}
+  </div>
+   
+
+    {% block content %}
+
+    {% endblock content %} 
+    
+   
+
+  
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src='{% static "bootstrap/js/jquery-3.2.1.slim.min.js" %}'></script>
+    <script src='{% static "bootstrap/js/popper.min.js" %}'></script>
+    <script src='{% static "bootstrap/js/bootstrap.min.js" %}'></script>
+</body>
+
+
+</html>
