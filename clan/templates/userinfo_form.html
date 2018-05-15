@@ -1,40 +1,37 @@
-{% extends 'home.html' %}
-{% block head_title %} Create Account || {{block.super}}{% endblock head_title %}
-{% block create_account_form %}
+{% extends 'base.html' %}
+{% block head_title %} Fill in Your Information || {{block.super}}{% endblock head_title %}
+{% block userinfo_form %}
 {% load widget_tweaks %}
 
-<p>Don't have an account? Create one now, its free and simple </p>
-
+<h1 id="username">{{user}}</h1>
 
 
 
       <div class="card" style="width: 30rem;" style="background-color: #f2f2f2">
       <div class="card-header text-center">
-        <b>Choose a Username and Password</b>
+        <b>Please fill in your Clan Information</b>
       </div>
       <div class="card-body">
         
         
-        <form method="post" action="">
+        <form method="post" action="" enctype="multipart/form-data">
         {% csrf_token %}
        
-        {% for field in form %}
+        {% for field in form.visible_fields %}
           <div class="form-group col-md-10">
           
+           {{ field.errors }}
            <label for="{{field.field.id_for_label}}">{{field.label}}:</label> 
            {% render_field field class="form-control" %}
           </div>
-          
-            {% for error in field.errors %}
-              <div class="alert alert-danger">
-                <strong>{{ error|escape }}</strong>
-              </div>
-            {% endfor %}
         {% endfor %}
+
+        <input type="hidden" name="username" id= "id_username" value = "{{user}}" required/>
+
      
         
         <div class="text-center">
-          <button class="btn btn-primary my-2 my-sm-0" type="submit"> Create Account </button>
+          <button class="btn btn-success my-2 my-sm-0" type="submit"> Save </button>
 
                                       
         </div>
@@ -52,7 +49,7 @@
 
 
 
-{% endblock create_account_form %}
+{% endblock userinfo_form %}
 
 
 

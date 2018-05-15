@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     {% load staticfiles %}
-    
+    {% load widget_tweaks %}
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href='{% static "bootstrap/css/bootstrap.min.css" %}' type="text/css" />
     <link rel="stylesheet" href='{% static "style.css" %}' type="text/css" />
@@ -19,18 +19,33 @@
   
   <body>
 
-      <nav class="navbar fixed-top navbar-dark bg-dark" style="color: white">
-        <a class="navbar-brand" href="{% url 'profile' %}"> GANGS </a>
-        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+    <div class="jumbotron jumbotron-fluid " style="height: 8rem; background-color: black; color: white">
+      <div class="row">
+
+        <div class="col-6">
+          <h1 class="display-4 ml-3">GANGS</h1>
+          
+          
+        </div>
+        <div class="col-1">
+        </div>
+      
+        <div class="col-5">
+
+            {% include 'login_form.html' %}
+        </div>
         
+      </div>
+    
+    </div>
 
-      </nav>
 
-
-    <br><br>
+    <p class="lead ml-3"> Manage your close Friends, Family and Casual People</p>
     <div class="container ml-2">
-      {%block userinfo_form%}
-      {%endblock userinfo_form%}
+      
+      
+      {% block create_account_form %}
+      {% endblock create_account_form %}
       {%block profile_content%}
       {%endblock profile_content%}
     </div>

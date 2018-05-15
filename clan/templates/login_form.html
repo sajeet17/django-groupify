@@ -1,0 +1,47 @@
+
+
+
+<form method="post" class="form-inline" action="/login/" style="font-size: 12px;">
+    {% csrf_token %}
+   
+    
+      <div class="form-group col-4" >
+      
+       <label for="username">Username:</label> 
+       <input type="text" name="username" required />
+
+      </div>
+      {% for error in field.errors %}
+          <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+          </div>
+      {% endfor %}
+      <div class="form-group col-4">
+      
+       <label for="password">Password:</label> 
+       <input type="password" name="password" required />
+      </div>
+      
+        {% for error in field.errors %}
+          <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+          </div>
+        {% endfor %}
+   
+ 
+    
+    <div class="text-center">
+      <button class="btn btn-dark mt-3 mx-4" style="font-size: 12px;" type="submit"> Login </button>
+
+                                  
+    </div>
+    
+</form>
+
+
+
+
+
+
+
+

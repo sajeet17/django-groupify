@@ -17,12 +17,23 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls.static import static
-from user_login.views import UserFormView
+from django.views.generic import TemplateView
+from user_login.views import UserFormView, UserInfoView, LoginHandler, logout_handler
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('register/', UserFormView.as_view(), name='register'),
+    path('login/', LoginHandler.as_view(), name='login_handler'),
+    path('logout/',logout_handler, name="logout"),
+    path('', UserFormView.as_view(), name='homeview'),
+    path('info/', UserInfoView.as_view(), name='info'),
+    path('profile/',TemplateView.as_view(template_name="profile.html"), name="profile")
 ]
 
 if settings.DEBUG:
-	urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+
+
+   
+
+
