@@ -15,8 +15,10 @@ class UserInfoForm(forms.ModelForm):
 	
 	class Meta:
 		model = UserInfo
-		fields = ['first_name','last_name', 'age' ,'description', 'profile_picture','username']
+		fields = ['first_name','last_name', 'age' ,'description', 'profile_picture', 'username']
+
 
 class LoginForm(forms.Form):
+
 	username = forms.CharField(label="Username", max_length=30)
 	password = forms.CharField(label="Password", widget= forms.PasswordInput)

@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
-from user_login.views import UserFormView, UserInfoView, LoginHandler, logout_handler
+from user_login.views import UserFormView, UserInfoView, LoginHandler, logout_handler, ProfileView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,7 +26,7 @@ urlpatterns = [
     path('logout/',logout_handler, name="logout"),
     path('', UserFormView.as_view(), name='homeview'),
     path('info/', UserInfoView.as_view(), name='info'),
-    path('profile/',TemplateView.as_view(template_name="profile.html"), name="profile")
+    path('profile/',ProfileView.as_view(), name="profile")
 ]
 
 if settings.DEBUG:

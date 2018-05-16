@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 # login attaches a session id 
 from django.views.generic import View
 from .forms import UserForm, UserInfoForm, LoginForm
+from .models import UserInfo
 
 
 
@@ -56,6 +57,7 @@ class UserFormView(View):
 	#if there is a get request that mean user is requesting the form, so display blank form
 
 	def get(self, request):
+
 		#use the UserForm with no context blank data
 		form = self.form_class(None)
 		return render(request, self.template_name,{'form': form})
@@ -112,14 +114,16 @@ class UserFormView(View):
 
 
 class UserInfoView(View):
+
 	form_class= UserInfoForm
 	template_name="userinfo_form.html"
 	
 	def get(self, request):
 		username = request.session['user_username']
+		user_profile_data = UserInfo.objects.get(username = username)
 
-		form= self.form_class(None)
-		return(render(request, self.template_name,{'form':form,'user':username}))
+		form= self.form_class(instance = user_profile_data)
+		return render(request, self.template_name,{'form':form,'user':username})
 
 	def post(self, request):
 		username = request.session['user_username']
@@ -131,12 +135,12 @@ class UserInfoView(View):
 
 			user_info = form.save(commit=False)
 
-			first_name = form.cleaned_data['first_name']
-			last_name = form.cleaned_data['last_name']
-			age= form.cleaned_data['age']
-			description= form.cleaned_data['description']
-			profile_picture= form.cleaned_data['profile_picture']
-			username = form.cleaned_data['username']
+			first_name      = form.cleaned_data['first_name']
+			last_name       = form.cleaned_data['last_name']
+			age			    = form.cleaned_data['age']
+			description     = form.cleaned_data['description']
+			profile_picture = form.cleaned_data['profile_picture']
+			username        = form.cleaned_data['username']
 
 			user_info.save()
 
@@ -144,3 +148,26 @@ class UserInfoView(View):
 		return render(request, self.template_name, {'form':form, 'user':username})
 
 
+class ProfileView(View):
+
+	template_name = 'profile.html'
+	
+
+	def get(self, request):
+
+		username = request.session['user_username']
+
+		if username is not None:
+			queryset= UserInfo.objects.filter(username = username)
+			
+			if queryset.exists():
+
+				user_info_context= {
+				'object_list': queryset
+				}
+
+				return render(request, self.template_name, user_info_context )
+
+			return redirect("/info/")
+		
+		return render(request, '404error.html', {})
