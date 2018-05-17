@@ -40,13 +40,6 @@ class LoginHandler(View):
 
 
 
-
-
-
-
-
-
-
 class UserFormView(View):
 	form_class = UserForm
 	template_name = 'register_form.html'
@@ -120,13 +113,24 @@ class UserInfoView(View):
 	
 	def get(self, request):
 		username = request.session['user_username']
-		user_profile_data = UserInfo.objects.get(username = username)
+
+		try:
+		    user_profile_data = UserInfo.objects.get(username = username)
+		
+		except Exception:
+		    user_profile_data = None
 
 		form= self.form_class(instance = user_profile_data)
+		
+
 		return render(request, self.template_name,{'form':form,'user':username})
 
+	
 	def post(self, request):
+
 		username = request.session['user_username']
+
+		user_profile_data = UserInfo.objects.filter(username = username)
 
 		form = self.form_class(request.POST or None, request.FILES or None)
 
@@ -142,9 +146,20 @@ class UserInfoView(View):
 			profile_picture = form.cleaned_data['profile_picture']
 			username        = form.cleaned_data['username']
 
-			user_info.save()
+			if user_profile_data.exists():
+				if profile_picture:
+
+					user_profile_data.update(first_name=first_name, last_name=last_name, age=age, description=description, profile_picture=profile_picture)
+				else:
+
+					user_profile_data.update(first_name=first_name, last_name=last_name, age=age, description=description)
+
+			else:
+
+				user_info.save()
 
 			return redirect("/profile/")
+		
 		return render(request, self.template_name, {'form':form, 'user':username})
 
 
