@@ -115,7 +115,7 @@ class UserInfoView(View):
 		username = request.session['user_username']
 
 		try:
-		    user_profile_data = UserInfo.objects.get(username = username)
+		    user_profile_data = UserInfo.objects.get(user = request.user)
 		
 		except Exception:
 		    user_profile_data = None
@@ -123,14 +123,14 @@ class UserInfoView(View):
 		form= self.form_class(instance = user_profile_data)
 		
 
-		return render(request, self.template_name,{'form':form,'user':username})
+		return render(request, self.template_name,{'form':form,'user':request.user.username})
 
 	
 	def post(self, request):
 
 		username = request.session['user_username']
 
-		user_profile_data = UserInfo.objects.filter(username = username)
+		user_profile_data = UserInfo.objects.filter(user = request.user)
 
 		form = self.form_class(request.POST or None, request.FILES or None)
 
@@ -144,7 +144,7 @@ class UserInfoView(View):
 			age			    = form.cleaned_data['age']
 			description     = form.cleaned_data['description']
 			profile_picture = form.cleaned_data['profile_picture']
-			username        = form.cleaned_data['username']
+			
 
 			if user_profile_data.exists():
 				if profile_picture:
@@ -156,11 +156,12 @@ class UserInfoView(View):
 
 			else:
 
+				user_info.user= request.user
 				user_info.save()
 
 			return redirect("/profile/")
 		
-		return render(request, self.template_name, {'form':form, 'user':username})
+		return render(request, self.template_name, {'form':form, 'user':request.user.username})
 
 
 class ProfileView(View):
@@ -173,7 +174,7 @@ class ProfileView(View):
 		username = request.session['user_username']
 
 		if username is not None:
-			queryset= UserInfo.objects.filter(username = username)
+			queryset= UserInfo.objects.filter(user = request.user)
 			
 			if queryset.exists():
 

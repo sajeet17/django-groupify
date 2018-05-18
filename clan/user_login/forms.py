@@ -11,11 +11,11 @@ class UserForm(forms.ModelForm):
 
 
 class UserInfoForm(forms.ModelForm):
-	username = forms.CharField(widget=forms.HiddenInput)
+	
 	
 	class Meta:
 		model = UserInfo
-		fields = ['first_name','last_name', 'age' ,'description', 'profile_picture', 'username']
+		fields = ['first_name','last_name', 'age' ,'description', 'profile_picture']
 
 
 class LoginForm(forms.Form):
