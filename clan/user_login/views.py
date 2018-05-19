@@ -164,26 +164,3 @@ class UserInfoView(View):
 		return render(request, self.template_name, {'form':form, 'user':request.user.username})
 
 
-class ProfileView(View):
-
-	template_name = 'profile.html'
-	
-
-	def get(self, request):
-
-		username = request.session['user_username']
-
-		if username is not None:
-			queryset= UserInfo.objects.filter(user = request.user)
-			
-			if queryset.exists():
-
-				user_info_context= {
-				'object_list': queryset
-				}
-
-				return render(request, self.template_name, user_info_context )
-
-			return redirect("/info/")
-		
-		return render(request, '404error.html', {})
