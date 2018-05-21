@@ -40,14 +40,16 @@
                 </div>
 
               <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
-                <a href ="{% url 'posts' %}" class="btn btn-success"> Write a post </a>
+                <a href ="{% url 'create-post' %}" class="btn btn-success"> Write a post </a>
                 <br><br>
 
                 {%for post in posts_list %}
 
 
                   <div class="card" style="width: 18rem;">
+                    {% if post.picture %}
                     <img class="card-img-top" src="{{post.picture.url}}" alt="Card image cap">
+                    {% endif %}
                     <div class="card-body">
                       <h5 class="card-title">{{post.title}}</h5>
 

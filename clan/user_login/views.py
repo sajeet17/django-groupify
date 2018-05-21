@@ -7,6 +7,8 @@ from .forms import UserForm, UserInfoForm, LoginForm
 from .models import UserInfo
 
 
+def get_user(request):
+	return {'username' :request.user}
 
 def logout_handler(request):
 	logout(request)
@@ -34,7 +36,7 @@ class LoginHandler(View):
 				if user.is_active:
 					login(request, user)
 					request.session['user_username'] = user.username
-					return redirect("/profile/")
+					return redirect("/blog/profile/")
 
 		return render(request, 'failed_login.html', {'login_form':form})
 
@@ -159,7 +161,7 @@ class UserInfoView(View):
 				user_info.user= request.user
 				user_info.save()
 
-			return redirect("/profile/")
+			return redirect("/blog/profile/")
 		
 		return render(request, self.template_name, {'form':form, 'user':request.user.username})
 

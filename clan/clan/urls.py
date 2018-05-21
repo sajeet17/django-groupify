@@ -15,12 +15,12 @@ Including another URLconf
 """
 from django.conf import settings
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path, include
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
-from user_login.views import UserFormView, UserInfoView, LoginHandler, logout_handler
-from blog.views import ProfileView
-from blog.views import PostView
+from user_login.views import UserFormView, UserInfoView, LoginHandler, logout_handler, get_user
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,8 +28,8 @@ urlpatterns = [
     path('logout/',logout_handler, name="logout"),
     path('', UserFormView.as_view(), name='homeview'),
     path('info/', UserInfoView.as_view(), name='info'),
-    path('profile/',ProfileView.as_view(), name="profile"),
-    path('posts/', PostView.as_view(), name="posts")
+    path('blog/', include('blog.urls')),
+        
 ]
 
 if settings.DEBUG:

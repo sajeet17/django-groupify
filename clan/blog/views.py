@@ -36,7 +36,7 @@ class ProfileView(View):
 		
 
 
-class PostView(View):
+class CreatePostView(View):
 
 	form_class = PostForm
 	template_name= 'blog/postform.html'
@@ -56,9 +56,18 @@ class PostView(View):
 			user_post = form.save(commit=False)
 			user_post.user= request.user
 			user_post.save()
-			return redirect('/profile/')
+			return redirect('/blog/profile/')
 
 		return render(request, self.template_name, {'post_form':form})
 
 
 
+class EditPostView(View):
+	pass
+	# form_class = PostForm
+	# template_name= 'blog/postform.html'
+
+	# def get(self, request):
+
+	# 	instance= Post.objects.filter()
+	# 	form = self.form_class(instance=instance)
