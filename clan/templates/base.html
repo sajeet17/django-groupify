@@ -14,7 +14,7 @@
     <!--Font-awesome CSS for icons-->
     <link rel="stylesheet" href='{% static "font-awesome/css/font-awesome.min.css" %}' type="text/css" />
 
-    <title>{% block head_title %} KTA HO {% endblock head_title %}</title>
+    <title>{% block head_title %} CLAN {% endblock head_title %}</title>
   </head>
   
   <body>
@@ -30,11 +30,8 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
             <ul class="navbar-nav ml-auto">
+              {% include 'searchform.html' %}
 
-              <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
-              </form>
 
 
 

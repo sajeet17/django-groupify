@@ -18,10 +18,7 @@ class LoginHandler(View):
 	form_class= LoginForm
 	template_name='login_form.html'
 
-	def get(self, request):
-		form = self.form_class(None)
-		return render(request, self.template_name, {'login_form': form})
-
+	#get method used in template.. since this is a snippet and not a template
 	def post(self, request):
 		form = self.form_class(request.POST)
 
@@ -157,7 +154,7 @@ class UserInfoView(View):
 					user_profile_data.update(first_name=first_name, last_name=last_name, age=age, description=description)
 
 			else:
-
+				user_info.username= request.user.username
 				user_info.user= request.user
 				user_info.save()
 

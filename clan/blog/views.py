@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
-from .models import Post
-from .forms import PostForm
+from django.contrib.auth.models import User
+
 from django.views.generic import View
 from user_login.models import UserInfo
 from django.http import Http404
 
+from .models import Post
+from .forms import PostForm, SearchForm
 
 class ProfileView(View):
 
@@ -71,3 +73,24 @@ class EditPostView(View):
 
 	# 	instance= Post.objects.filter()
 	# 	form = self.form_class(instance=instance)
+
+class SearchFormView(View):
+
+	form_class= SearchForm
+	template_name = 'searchform.html'
+
+
+
+	def post(self, request):
+
+		searched_user = request.POST['search_result']
+		search_result = UserInfo.objects.get(username__icontains=searched_user)
+
+		context = {
+		'username': search_result.username,
+		'name': search_result.first_name + search_result.last_name,
+		'profile_picture': search_result.profile_picture,
+
+		}
+
+		return render(request, 'searchresults.html', context)

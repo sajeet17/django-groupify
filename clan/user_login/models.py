@@ -4,6 +4,7 @@ from django.conf import settings
 class UserInfo(models.Model):
 
 	user= models.ForeignKey(settings.AUTH_USER_MODEL, on_delete= models.CASCADE)
+	username = models.CharField(max_length=30, blank=True, null=True)
 	first_name= models.CharField(max_length=30, blank=True, null=True)
 	last_name = models.CharField(max_length=30 , blank= True, null=True)
 	age = models.IntegerField(blank=True, null=True)
@@ -13,3 +14,4 @@ class UserInfo(models.Model):
 
 	def __str__(self):
 		return self.first_name
+
