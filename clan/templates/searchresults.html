@@ -1,9 +1,44 @@
-<html>
+{% extends 'base.html' %}
+{% block head_title %} Search {% endblock head_title %}
+{% block search_result %}
+	<br>
+	<h5 style="color:red";>{{objects}} result(s) found!</h5>
+
+	{% for users in search_result %}
+	
+      <div class="card" style="width: 15rem;" style="background-color: #f2f2f2">
+      <div class="card-header text-center">
+        <b>{{users.username}}</b>
+      </div>
+
+      <div class="card-body text-center">
+     {% if users.profile_picture %}
+      <img class="card-img-top" src="{{users.profile_picture.url}}" style="height: 10rem; width: 10rem" alt="NO Picture">
+     {% endif %}
+      
+        
+			<p>
+				<b> Name: </b> {{users.first_name}} {{users.last_name}}
+				<br>
+				<b> Active Since: </b> {{users.created_date}}
+			</p>
+       
+        
+        	<button class="btn btn-primary"> Add Friend </button>
+      </div>
+      </div>
+      <br>
+	{% endfor %}
+
+
+{% endblock search_result %}
+
 
 {{profile_picture}}
 {{username}}
 {{name}}
-</html>
+{{active_since}}
+
 
 
 

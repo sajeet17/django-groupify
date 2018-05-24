@@ -84,13 +84,14 @@ class SearchFormView(View):
 	def post(self, request):
 
 		searched_user = request.POST['search_result']
-		search_result = UserInfo.objects.get(username__icontains=searched_user)
+		search_result = UserInfo.objects.filter(username__icontains=searched_user)
+		
+		number_of_results=len(search_result)
 
 		context = {
-		'username': search_result.username,
-		'name': search_result.first_name + search_result.last_name,
-		'profile_picture': search_result.profile_picture,
 
+		'search_result': search_result,
+		'objects': number_of_results
 		}
 
 		return render(request, 'searchresults.html', context)
