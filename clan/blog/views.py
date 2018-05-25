@@ -78,13 +78,12 @@ class SearchFormView(View):
 
 	form_class= SearchForm
 	template_name = 'searchform.html'
-
-
-
+	
 	def post(self, request):
 
 		searched_user = request.POST['search_result']
-		search_result = UserInfo.objects.filter(username__icontains=searched_user)
+		#you cannot search yourself
+		search_result = UserInfo.objects.filter(username__icontains=searched_user).exclude(username__iexact=request.user.username)
 		
 		number_of_results=len(search_result)
 
